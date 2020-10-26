@@ -22,6 +22,8 @@ namespace RPN_Lab1
         {
             listBox1.Items.Clear();
             chart1.Series[0].Points.Clear();
+            if (string.IsNullOrEmpty(textBoxExpression.Text))
+                return;
 
             RPNClass obj1 = new RPNClass();
             bool res = obj1.GetRPNString(textBoxExpression.Text, out string rpnString);
@@ -29,10 +31,13 @@ namespace RPN_Lab1
             if (!res)
                 return;
 
-            double x1 = double.Parse(textBoxX1.Text), x2 = double.Parse(textBoxX2.Text)+0.000000001;
+            double x1 = double.Parse(textBoxX1.Text), x2 = double.Parse(textBoxX2.Text);
             double step = double.Parse(textBox1.Text);
             if (x1 >= x2)
-                MessageBox.Show("x2 must be greater than x1!!!");
+            {
+                MessageBox.Show("x2 має бути більше x1!!!");
+                return;
+            }
 
             Dictionary<double, double> table = new Dictionary<double, double>();
             try
@@ -41,6 +46,8 @@ namespace RPN_Lab1
                 {
                
                     double result = obj1.Evaluate(rpnString: rpnString, x: x);
+                    if (double.IsInfinity(result))
+                        continue;
                     table.Add(key: x, value: result);
                 
                 }

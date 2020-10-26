@@ -257,6 +257,11 @@ namespace RPN_Lab1
 
                     tempStack.Push($"{pos}");   //and put bin operation in stack
                 }
+                else
+                {
+                    result = $"Невідомий символ в позиції {i+1}";
+                    return false;
+                }
             }
 
             while (tempStack.Count != 0)
@@ -301,7 +306,7 @@ namespace RPN_Lab1
         private void RequireArgs(int count, string funcName)
         {
             if (doubleStack.Count < count)
-                throw new Exception($"Операція \"{funcName}\" потребує ще один аргумент.");
+                throw new Exception($"Операція \"{funcName}\" потребує більше аргументів.");
         }
 
     }
